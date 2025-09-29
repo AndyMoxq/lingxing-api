@@ -1,4 +1,4 @@
-# Teapplix Laravel Package
+# LingXing Laravel Package
 
 ## Installation
 
@@ -7,26 +7,30 @@
 We recommend installing the package locally using the following command:
 
 ```bash
-composer require thank-song/teapplix
+composer require thank-song/lingxing
 > 适配 Laravel 8.x 及以上版本
 
 ```
 
 ## ⚙️ 配置 Configuration
-直接在环境文件(.env)中新增  `TEAPPLIX_API_TOKEN=93***-*****-*****-*****-*****-*****-*9d3` 变量：
+直接在环境文件(.env)中新增  
+`LINGXING_APP_ID=YOUR-APP-ID-HERE` ,
+`LINGXING_APP_SECRET=YOUR-APP-SECRET-HERE`
 
 或发布配置文件到主项目：
 
 ```bash
-php artisan vendor:publish --tag=teapplix
+php artisan vendor:publish --tag=lingxing
 ```
 
-在 `config/teapplix.php` 中配置：
+在 `config/lingxing.php` 中配置：
 
 ```php
 return [
     // 使用 .env 中的配置自动初始化
-    'api_token'=>env('TEAPPLIX_API_TOKEN','YOUR-API-TOKEN-HERE')
+    'appId'=>env('LINGXING_APP_ID','YOUR-APP-ID-HERE'),
+    'appSecret'=>env('LINGXING_APP_SECRET','YOUR-APP-SECRET-HERE'),
+    'host' => env('LINGXING_HOST','https://openapi.lingxing.com')
 ];
 ```
 
@@ -35,12 +39,10 @@ return [
 ### 📝 示例：获取产品列表
 ```php
 
-use ThankSong\Teapplix\Teapplix;
+use ThankSong\LingXing\LingXing;
 
-$res = Teapplix::getProducts();
+$res = LingXing::getProducts();
 dump($res -> getData());
-dump($res -> getPage());
-dump($res -> getPageSize());
 dump($res -> hasMore());
 ```
 ## 📚 License
