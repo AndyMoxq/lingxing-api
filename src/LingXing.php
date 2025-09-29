@@ -14,6 +14,8 @@ use ThankSong\LingXing\Request\GetSbAdReportsRequest;
 use ThankSong\LingXing\Request\GetSpAdReportsRequest;
 use ThankSong\LingXing\Request\GetSdAdReportsRequest;
 use ThankSong\LingXing\Response\GetAdReportsResponse;
+use ThankSong\LingXing\Request\GetInboundListRequest;
+use ThankSong\LingXing\Response\GetInboundListResponse;
 
 class LingXing
 {
@@ -98,6 +100,12 @@ class LingXing
         $request = new GetSdAdReportsRequest;
         $request -> setParams($params);
         return GetAdReportsResponse::format($request -> doRequest());
+    }
+
+    public static function getInboundOrderList(array $params = []):GetInboundListResponse {
+        $request = new GetInboundListRequest;
+        $request -> setParams($params);
+        return GetInboundListResponse::format($request -> doRequest());
     }
 
 
