@@ -10,6 +10,10 @@ use ThankSong\LingXing\Request\GetOrderListRequest;
 use ThankSong\LingXing\Response\GetOrderListResponse;
 use ThankSong\LingXing\Request\GetProductListRequest;
 use ThankSong\LingXing\Response\GetProductListResponse;
+use ThankSong\LingXing\Request\GetSbAdReportsRequest;
+use ThankSong\LingXing\Request\GetSpAdReportsRequest;
+use ThankSong\LingXing\Request\GetSdAdReportsRequest;
+use ThankSong\LingXing\Response\GetAdReportsResponse;
 
 class LingXing
 {
@@ -42,14 +46,59 @@ class LingXing
         return GetSellerListResponse::format($request->doRequest());
     }
 
+    /**
+     * 获取订单列表
+     * @param array $params
+     * @return GetOrderListResponse
+     */
     public static function getOrderList(array $params): GetOrderListResponse{
         $request = new GetOrderListRequest($params);
         return GetOrderListResponse::format($request->doRequest());
     }
 
+    /**
+     * 获取商品列表
+     * @param array $params
+     * @return GetProductListResponse
+     */
     public static function getProductList(array $params=[]): GetProductListResponse{
         $request = new GetProductListRequest;
         $request -> setParams($params);
         return GetProductListResponse::format($request -> doRequest());
     }
+
+    /**
+     * SB广告报表
+     * @param array $params
+     * @return GetAdReportsResponse
+     */
+    public static function getSbAdReports(array $params): GetAdReportsResponse{
+        $request = new GetSbAdReportsRequest;
+        $request -> setParams($params);
+        return GetAdReportsResponse::format($request -> doRequest());
+    }
+
+    /**
+     * AD广告报表
+     * @param array $params
+     * @return GetAdReportsResponse
+     */
+    public static function getSpAdReports(array $params): GetAdReportsResponse{
+        $request = new GetSpAdReportsRequest;
+        $request -> setParams($params);
+        return GetAdReportsResponse::format($request -> doRequest());
+    }
+
+    /**
+     * SD广告报表
+     * @param array $params
+     * @return GetAdReportsResponse
+     */
+    public static function getSdAdReports(array $params): GetAdReportsResponse{
+        $request = new GetSdAdReportsRequest;
+        $request -> setParams($params);
+        return GetAdReportsResponse::format($request -> doRequest());
+    }
+
+
 }
