@@ -62,6 +62,16 @@ abstract class Request {
         return $this;
     }
 
+    public function validateRequiredParams(array $keys){
+        $errors = [];
+        foreach ($keys as $key){
+            $errors[] = "Param {$key} is required";
+        }
+        if(count($errors) > 0){
+            throw new \Exception(implode("\n",$errors));
+        }
+    }
+
     public function doRequest(){
         $host = $this -> host ?: config('lingxing.host');
         $appId= $this -> appId ?: config('lingxing.appId');

@@ -108,5 +108,7 @@ class LingXing
         return GetInboundListResponse::format($request -> doRequest());
     }
 
+    
+
 
 }

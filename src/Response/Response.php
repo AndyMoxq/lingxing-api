@@ -4,7 +4,7 @@ namespace ThankSong\LingXing\Response;
 abstract class Response {
     protected $code;
     protected $message;
-    protected $body;
+    protected $body=[];
 
     public function __construct(array $body){
         $this -> body = $body;
