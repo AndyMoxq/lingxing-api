@@ -5,8 +5,11 @@ namespace ThankSong\LingXing\Request;
 class GetInboundDetailRequest extends LxBaseRequest
 {
     public const ROUTE_NAME = '/basicOpen/overSeaWarehouse/stockOrder/detail';
-    public function __construct(){
+    public function __construct(string $overseas_order_no = null){
         $this -> setRouteName(self::ROUTE_NAME);
+        if (!empty($overseas_order_no)) {
+            $this -> setOverseasOrderNo($overseas_order_no);
+        }
     }
 
     /**

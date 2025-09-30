@@ -16,6 +16,8 @@ use ThankSong\LingXing\Request\GetSdAdReportsRequest;
 use ThankSong\LingXing\Response\GetAdReportsResponse;
 use ThankSong\LingXing\Request\GetInboundListRequest;
 use ThankSong\LingXing\Response\GetInboundListResponse;
+use ThankSong\LingXing\Request\GetInboundDetailRequest;
+use ThankSong\LingXing\Response\GetInboundDetailResponse;
 
 class LingXing
 {
@@ -24,6 +26,16 @@ class LingXing
         $request -> setRouteName($routeName)
                  -> setParams($params);
         return LxBaseResponse::format($request->doRequest());
+    }
+
+    /**
+     * 获取海外仓备货单详情
+     * @param string $overseas_order_no
+     * @return GetInboundDetailResponse
+     */
+    public static function getInboundOrderDetail(string $overseas_order_no): GetInboundDetailResponse{
+        $request = new GetInboundDetailRequest($overseas_order_no);
+        return GetInboundDetailResponse::format($request -> doRequest());
     }
 
     /**
@@ -108,7 +120,7 @@ class LingXing
         return GetInboundListResponse::format($request -> doRequest());
     }
 
-    
+
 
 
 }

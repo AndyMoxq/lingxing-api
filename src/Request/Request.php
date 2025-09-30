@@ -65,7 +65,9 @@ abstract class Request {
     public function validateRequiredParams(array $keys){
         $errors = [];
         foreach ($keys as $key){
-            $errors[] = "Param {$key} is required";
+            if(!isset($this -> params[$key])){
+                $errors[] = "Param {$key} is required";
+            }
         }
         if(count($errors) > 0){
             throw new \Exception(implode("\n",$errors));
