@@ -18,6 +18,9 @@ class GetInboundListRequest extends LxBaseRequest {
      * @return static
      */
     public function setStatus(int $status){
+        if(!in_array($status, [10, 20, 30, 40, 50, 51, 60])){
+            throw new \InvalidArgumentException('status参数错误');
+        }
         $this -> setParam('status', $status);
         return $this;
     }
