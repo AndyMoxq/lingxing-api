@@ -51,7 +51,6 @@ class GetInboundListRequest extends LxBaseRequest {
         return $this;
     }
 
-
     /**
      * 设置收获仓库ID
      * @param int $r_wid
@@ -77,7 +76,6 @@ class GetInboundListRequest extends LxBaseRequest {
         }
         return $this;
     }
-
 
     /**
      * 设置海外仓备货单号
