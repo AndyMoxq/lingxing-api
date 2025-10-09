@@ -99,14 +99,14 @@ abstract class Request {
             $client -> setAccessToken( Cache::get("{$appId}_access_token"));
         }
         $this -> validate();
-        dump([
+        /* dump([
             'request_id' => $this -> getRequestId(),
             'app_id' => $appId,
             'routeName' => $this -> routeName,
             'method' => $this -> method,
             'params' => $this -> params,
             'headers' => $this -> headers,
-        ]);
+        ]); */
         return $client -> makeRequest($this -> routeName,$this->method,$this->params,$this -> headers);
     }
 

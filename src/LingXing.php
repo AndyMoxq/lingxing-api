@@ -19,6 +19,8 @@ use ThankSong\LingXing\Request\GetInboundListRequest;
 use ThankSong\LingXing\Response\GetInboundListResponse;
 use ThankSong\LingXing\Request\GetInboundDetailRequest;
 use ThankSong\LingXing\Response\GetInboundDetailResponse;
+use ThankSong\LingXing\Request\GetShipMentListRequest;
+use ThankSong\LingXing\Response\GetShipMentListResponse;
 
 class LingXing
 {
@@ -30,6 +32,17 @@ class LingXing
         $request -> setRouteName($routeName)
                  -> setParams($params);
         return LxBaseResponse::format($request->doRequest());
+    }
+
+    /**
+     * 获取入库单列表
+     * @param array $params
+     * @return GetOrderListResponse
+     */
+    public static function getShipmentList(array $params=[]): GetShipMentListResponse{
+        $request = new GetShipMentListRequest;
+        $request -> setParams($params);
+        return GetShipMentListResponse::format($request -> doRequest());
     }
 
     /**
