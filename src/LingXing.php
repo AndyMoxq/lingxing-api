@@ -131,6 +131,11 @@ class LingXing
         return GetAdReportsResponse::format($request -> doRequest());
     }
 
+    /**
+     * 获取海外仓备货单列表
+     * @param array $params
+     * @return GetInboundListResponse
+     */
     public static function getInboundOrderList(array $params = []):GetInboundListResponse {
         $request = new GetInboundListRequest;
         $request -> setParams($params);
