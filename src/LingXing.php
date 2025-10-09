@@ -35,7 +35,7 @@ class LingXing
     }
 
     /**
-     * 获取入库单列表
+     * 获取FBA发货单列表
      * @param array $params
      * @return GetOrderListResponse
      */
