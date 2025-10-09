@@ -1,9 +1,11 @@
 <?php
 namespace ThankSong\LingXing\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use ThankSong\LingXing\Services\OpenAPIRequestService;
 
 abstract class Request {
+    protected $request_id;
     protected $appId;
     protected $appSecret;
     protected $host;
@@ -13,6 +15,15 @@ abstract class Request {
     protected $method = 'POST';
     protected $routeName;
     protected $accessToken;
+
+    public function getRequestId(){
+        return $this -> request_id;
+    }
+
+    public function setRequestId(string $requestId){
+        $this -> request_id = $requestId;
+        return $this;
+    }
 
     public function setAppId(string $appId){
         $this -> appId = $appId;
@@ -75,6 +86,7 @@ abstract class Request {
     }
 
     public function doRequest(){
+        $this -> setRequestId(Str::uuid());
         $host = $this -> host ?: config('lingxing.host');
         $appId= $this -> appId ?: config('lingxing.appId');
         $appSecret = $this -> appSecret ?: config('lingxing.appSecret');
@@ -87,6 +99,14 @@ abstract class Request {
             $client -> setAccessToken( Cache::get("{$appId}_access_token"));
         }
         $this -> validate();
+        dump([
+            'request_id' => $this -> getRequestId(),
+            'app_id' => $appId,
+            'routeName' => $this -> routeName,
+            'method' => $this -> method,
+            'params' => $this -> params,
+            'headers' => $this -> headers,
+        ]);
         return $client -> makeRequest($this -> routeName,$this->method,$this->params,$this -> headers);
     }
 

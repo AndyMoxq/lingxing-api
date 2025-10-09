@@ -1,5 +1,6 @@
 <?php
 namespace ThankSong\LingXing;
+use ThankSong\LingXing\Services\IpService;
 use ThankSong\LingXing\Request\LxBaseRequest;
 use ThankSong\LingXing\Response\LxBaseResponse;
 use ThankSong\LingXing\Request\GetWarehouseRequest;
@@ -21,6 +22,9 @@ use ThankSong\LingXing\Response\GetInboundDetailResponse;
 
 class LingXing
 {
+    public static function getIp(): string{
+        return IpService::getIp();
+    }
     public static function baseRequest(string $routeName,$params=[]): LxBaseResponse{
         $request = new LxBaseRequest();
         $request -> setRouteName($routeName)
