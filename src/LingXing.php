@@ -21,15 +21,22 @@ use ThankSong\LingXing\Request\GetInboundDetailRequest;
 use ThankSong\LingXing\Response\GetInboundDetailResponse;
 use ThankSong\LingXing\Request\GetShipMentListRequest;
 use ThankSong\LingXing\Response\GetShipMentListResponse;
+use ThankSong\LingXing\Request\GetUserListRequest;
+use ThankSong\LingXing\Response\GetUserListResponse;
 
 class LingXing
 {
+    public static function getUserList(): GetUserListResponse{
+        $request = new GetUserListRequest();
+        return GetUserListResponse::format($request->doRequest());
+    }
     public static function getIp(): string{
         return IpService::getIp();
     }
-    public static function baseRequest(string $routeName,$params=[]): LxBaseResponse{
+    public static function baseRequest(string $routeName,$params=[],$method='POST'): LxBaseResponse{
         $request = new LxBaseRequest();
         $request -> setRouteName($routeName)
+                 -> setMethod($method)
                  -> setParams($params);
         return LxBaseResponse::format($request->doRequest());
     }

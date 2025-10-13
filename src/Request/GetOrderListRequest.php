@@ -8,8 +8,8 @@ class GetOrderListRequest extends LxBaseRequest {
 
     public function __construct(array $params = []){
         $this -> setRouteName(self::ROUTE_NAME)
-              -> setLength(self::DEFAULT_LENGTH) 
-              -> setDateType();
+              -> setLength(self::DEFAULT_LENGTH);
+        $this -> setDateType('update_time');
         if(!empty($params)) $this -> setParams($params);
     }
 

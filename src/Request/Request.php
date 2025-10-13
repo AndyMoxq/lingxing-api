@@ -34,45 +34,93 @@ abstract class Request {
         $this -> appSecret = $appSecret;
     }
 
+    /**
+     * 设置请求域名
+     * @param string $host
+     * @return Request
+     */
     public function setHost(string $host){
         $this -> host = $host;
         return $this;
     }
 
-    public function setParams(array $params){
+    /**
+     * 批量设置参数
+     * @param array $params
+     * @return static
+     */
+    public function setParams(array $params): static{
         $this -> params = $params;
         return $this;
     }
 
-    public function setParam($key,$value){
+    /**
+     * 设置单个参数
+     * @param $key
+     * @param $value
+     * @return Request
+     */
+    public function setParam($key,$value): static{
         $this -> params[$key] = $value;
         return $this;
     }
 
-    public function setRouteName(string $routeName){
+    /**
+     * 设置请求路径
+     * @param string $routeName
+     * @return Request
+     */
+    public function setRouteName(string $routeName): static{
         $this -> routeName = $routeName;
         return $this;
     }
 
-    public function setMethod(string $method){
+    /**
+     * 设置请求方式，POST | GET
+     * @param string $method
+     * @return Request
+     */
+    public function setMethod(string $method): static{
         $this -> method = $method;
+        return $this;
     }
 
+    /**
+     * 设置分页长度
+     * @param int $length
+     * @return static
+     */
     public function setLength(int $length){
         $this -> setParam('length',$length);
         return $this;
     }
 
-    public function setOffset(int $offset){
+    /**
+     * 设置分页偏移量
+     * @param int $offset
+     * @return static
+     */
+    public function setOffset(int $offset): static{
         $this -> setParam('offset',$offset);
         return $this;
     }
 
-    public function setHeaders(array $headers){
+    /**
+     * 设置请求头
+     * @param array $headers
+     * @return static
+     */
+    public function setHeaders(array $headers): static{
         $this -> headers = $headers;
         return $this;
     }
 
+    /**
+     * 验证必填字段
+     * @param array $keys
+     * @throws \Exception
+     * @return void
+     */
     public function validateRequiredParams(array $keys){
         $errors = [];
         foreach ($keys as $key){

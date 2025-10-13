@@ -6,7 +6,8 @@ class GetInboundListRequest extends LxBaseRequest {
     public const ROUTE_NAME = '/erp/sc/routing/owms/inbound/listInbound';
 
     public function __construct(array $params = []){
-        $this -> setRouteName(self::ROUTE_NAME)->setPageSize(20);
+        $this -> setRouteName(self::ROUTE_NAME);
+        $this -> setPageSize(20);
         if(!empty($params)){
             $this -> setParams($params);
         }

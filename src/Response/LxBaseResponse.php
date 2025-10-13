@@ -4,7 +4,7 @@ namespace ThankSong\LingXing\Response;
 class LxBaseResponse extends Response {
     public function validate(){
         if ($this -> getCode() !== 0) {
-            throw new \Exception("Error Processing Request", 1);
+            throw new \Exception($this -> getMessage(), 1);
             # code...
         }
     }
