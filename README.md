@@ -40,7 +40,6 @@ return [
 ```php
 
 use ThankSong\LingXing\Request\GetOrderListRequest;
-use ThankSong\LingXing\Response\GetOrderListResponse;
 
 $request = new GetOrderListRequest();
 $request -> setOffset(0)
