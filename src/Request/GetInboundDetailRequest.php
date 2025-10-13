@@ -2,6 +2,8 @@
 
 namespace ThankSong\LingXing\Request;
 
+use ThankSong\LingXing\Response\GetInboundDetailResponse;
+
 class GetInboundDetailRequest extends LxBasicRequest
 {
     public const ROUTE_NAME = '/basicOpen/overSeaWarehouse/stockOrder/detail';
@@ -24,5 +26,9 @@ class GetInboundDetailRequest extends LxBasicRequest
 
     public function validate(){
         $this -> validateRequiredParams(['overseas_order_no']);
+    }
+
+    public function send(): GetInboundDetailResponse{
+        return GetInboundDetailResponse::format($this -> doRequest());
     }
 }

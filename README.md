@@ -36,6 +36,32 @@ return [
 
 ## 🚀 使用方式 Usage
 
+### 📝 示例：请求类-获取订单列表
+```php
+
+use ThankSong\LingXing\Request\GetOrderListRequest;
+use ThankSong\LingXing\Response\GetOrderListResponse;
+
+$request = new GetOrderListRequest();
+$request -> setOffset(0)
+          -> setLength(20)
+          -> setDateType('update_time')
+          -> setStartTime(now()->subHours(2)->timestamp)
+          -> setEndTime(now()->endOfDay()->timestamp);
+$response = $request -> send();
+
+dump($response -> getData());
+```
+
+### 📝 示例：基础请求-获取产品列表
+```php
+
+use ThankSong\LingXing\LingXing;
+
+$res = LingXing::basicRequest('/erp/sc/data/local_inventory/supplier',['offset'=>$offset,'length'=>$length]);
+dump($res -> getData());
+dump($res -> hasMore());
+```
 ### 📝 示例：获取产品列表
 ```php
 

@@ -3,6 +3,7 @@
 namespace ThankSong\LingXing\Request;
 use Illuminate\Support\Carbon;
 use ThankSong\LingXing\Exception\RequestException;
+use ThankSong\LingXing\Response\GetShipMentListResponse;
 
 class GetShipMentListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/erp/sc/routing/storage/shipment/getInboundShipmentList';
@@ -75,6 +76,10 @@ class GetShipMentListRequest extends LxBasicRequest {
         $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $end_date)->toDateTimeString();
         $this -> setParam('end_date', $end_date);
         return $this;
+    }
+
+    public function send(): GetShipMentListResponse{
+        return GetShipMentListResponse::format($this -> doRequest());
     }
 
     public function validate(){

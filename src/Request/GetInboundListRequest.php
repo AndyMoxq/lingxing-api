@@ -2,6 +2,8 @@
 
 namespace ThankSong\LingXing\Request;
 
+use ThankSong\LingXing\Response\GetInboundListResponse;
+
 class GetInboundListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/erp/sc/routing/owms/inbound/listInbound';
 
@@ -153,6 +155,10 @@ class GetInboundListRequest extends LxBasicRequest {
         }
         $this -> setParam('is_delete', $is_delete);
         return $this;
+    }
+
+    public function send(): GetInboundListResponse{
+        return GetInboundListResponse::format($this -> doRequest());
     }
 
 }

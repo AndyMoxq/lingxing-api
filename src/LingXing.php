@@ -62,7 +62,7 @@ class LingXing
                  -> setMethod($method)
                  -> setParams($params)
                  -> setHeaders($headers);
-        return LxBasicResponse::format($request->doRequest());
+        return $request -> send();
     }
 
     /**
@@ -73,7 +73,7 @@ class LingXing
     public static function getInventoryList(array $params=[]): GetInventoryListResponse{
         $request = new GetInventoryListRequest();
         $request -> setParams($params);
-        return GetInventoryListResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -84,7 +84,7 @@ class LingXing
     public static function getShipmentList(array $params=[]): GetShipMentListResponse{
         $request = new GetShipMentListRequest;
         $request -> setParams($params);
-        return GetShipMentListResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -94,7 +94,7 @@ class LingXing
      */
     public static function getInboundOrderDetail(string $overseas_order_no): GetInboundDetailResponse{
         $request = new GetInboundDetailRequest($overseas_order_no);
-        return GetInboundDetailResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -105,7 +105,7 @@ class LingXing
     public static function getWarehouses(array $params=[]): GetWarehouseResponse{
         $request = new GetWarehouseRequest;
         $request -> setParams($params);
-        return GetWarehouseResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -116,7 +116,7 @@ class LingXing
     public static function getSellerList(array $params=[]): GetSellerListResponse {
         $request = new GetSellerListRequest;
         $request -> setParams($params);
-        return GetSellerListResponse::format($request->doRequest());
+        return $request -> send();
     }
 
     /**
@@ -126,7 +126,7 @@ class LingXing
      */
     public static function getOrderList(array $params): GetOrderListResponse{
         $request = new GetOrderListRequest($params);
-        return GetOrderListResponse::format($request->doRequest());
+        return $request -> send();
     }
 
     /**
@@ -137,7 +137,7 @@ class LingXing
     public static function getProductList(array $params=[]): GetProductListResponse{
         $request = new GetProductListRequest;
         $request -> setParams($params);
-        return GetProductListResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -148,7 +148,7 @@ class LingXing
     public static function getSbAdReports(array $params): GetAdReportsResponse{
         $request = new GetSbAdReportsRequest;
         $request -> setParams($params);
-        return GetAdReportsResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -159,7 +159,7 @@ class LingXing
     public static function getSpAdReports(array $params): GetAdReportsResponse{
         $request = new GetSpAdReportsRequest;
         $request -> setParams($params);
-        return GetAdReportsResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -170,7 +170,7 @@ class LingXing
     public static function getSdAdReports(array $params): GetAdReportsResponse{
         $request = new GetSdAdReportsRequest;
         $request -> setParams($params);
-        return GetAdReportsResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**
@@ -181,7 +181,7 @@ class LingXing
     public static function getInboundList(array $params = []):GetInboundListResponse {
         $request = new GetInboundListRequest;
         $request -> setParams($params);
-        return GetInboundListResponse::format($request -> doRequest());
+        return $request -> send();
     }
 
     /**

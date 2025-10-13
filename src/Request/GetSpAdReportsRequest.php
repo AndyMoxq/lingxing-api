@@ -2,6 +2,8 @@
 
 namespace ThankSong\LingXing\Request;
 
+use ThankSong\LingXing\Response\GetAdReportsResponse;
+
 class GetSpAdReportsRequest extends LxBasicRequest
 {
     public const ROUTE_NAME = '/pb/openapi/newad/spCampaignReports';
@@ -37,6 +39,10 @@ class GetSpAdReportsRequest extends LxBasicRequest
     public function showDetail(bool $show_detail = true): static{
         $this -> setParam('show_detail', $show_detail ? 1 : 0);
         return $this;
+    }
+
+    public function send(): GetAdReportsResponse{
+        return GetAdReportsResponse::format($this -> doRequest());
     }
 
 

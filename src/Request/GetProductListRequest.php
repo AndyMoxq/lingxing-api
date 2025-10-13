@@ -1,6 +1,8 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
+use ThankSong\LingXing\Response\GetProductListResponse;
+
 class GetProductListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/erp/sc/routing/data/local_inventory/productList';
 
@@ -74,5 +76,9 @@ class GetProductListRequest extends LxBasicRequest {
             $this -> setSku($sku);
         }
         return $this;
+    }
+
+    public function send(): GetProductListResponse{
+        return GetProductListResponse::format($this -> doRequest());
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 use ThankSOng\LingXing\Exception\RequestException;
+use ThankSong\LingXing\Response\GetInventoryListResponse;
 
 class GetInventoryListRequest extends LxBasicRequest{
     public const ROUTE_NAME = '/erp/sc/routing/data/local_inventory/inventoryDetails';
@@ -46,5 +47,9 @@ class GetInventoryListRequest extends LxBasicRequest{
         if($length > self::MAX_LENGTH){
             throw new RequestException('Length should not be greater than '. self::MAX_LENGTH);
         }
+    }
+
+    public function send(): GetInventoryListResponse{
+        return GetInventoryListResponse::format($this -> doRequest());
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 use ThankSong\LingXing\Exception\RequestException;
+use ThankSong\LingXing\Response\GetWarehouseResponse;
 class GetWarehouseRequest extends LxBasicRequest {
     public const ROUTENAME='/erp/sc/data/local_inventory/warehouse';
 
@@ -35,5 +36,9 @@ class GetWarehouseRequest extends LxBasicRequest {
     public function setIsDelete(bool $is_delete = false){
         $this -> setParam('is_delete',$is_delete);
         return $this;
+    }
+
+    public function send(): GetWarehouseResponse{
+        return GetWarehouseResponse::format($this -> doRequest());
     }
 }

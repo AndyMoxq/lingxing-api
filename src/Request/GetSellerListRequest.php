@@ -1,6 +1,8 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
+use ThankSong\LingXing\Response\GetSellerListResponse;
+
 class GetSellerListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/pb/mp/shop/v2/getSellerList';
     public const DEFAULT_LENGTH = 200;
@@ -56,5 +58,9 @@ class GetSellerListRequest extends LxBasicRequest {
         $status = $status ? 1 : 0;
         $this -> setParam('status',$status);
         return $this;
+    }
+
+    public function send(): GetSellerListResponse{
+        return GetSellerListResponse::format($this -> doRequest());
     }
 }   

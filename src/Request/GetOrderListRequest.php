@@ -1,6 +1,8 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
+use ThankSong\LingXing\Response\GetOrderListResponse;
+
 class GetOrderListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/pb/mp/order/v2/list';
     public const MAX_LENGTH=500;
@@ -86,6 +88,10 @@ class GetOrderListRequest extends LxBasicRequest {
             unset($this -> params['start_time']);
             unset($this -> params['end_time']);
         }
+    }
+
+    public function send(): GetOrderListResponse{
+        return GetOrderListResponse::format($this -> doRequest());
     }
 
 }
