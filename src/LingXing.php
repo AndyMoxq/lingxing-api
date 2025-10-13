@@ -178,7 +178,7 @@ class LingXing
      * @param array $params
      * @return GetInboundListResponse
      */
-    public static function getInboundOrderList(array $params = []):GetInboundListResponse {
+    public static function getInboundList(array $params = []):GetInboundListResponse {
         $request = new GetInboundListRequest;
         $request -> setParams($params);
         return GetInboundListResponse::format($request -> doRequest());
