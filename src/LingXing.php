@@ -26,18 +26,40 @@ use ThankSong\LingXing\Response\GetUserListResponse;
 
 class LingXing
 {
+    /**
+     * 获取用户列表
+     * @return GetUserListResponse
+     */
     public static function getUserList(): GetUserListResponse{
         $request = new GetUserListRequest();
         return GetUserListResponse::format($request->doRequest());
     }
+
+    /**
+     * 获取IP地址
+     * @return string
+     */
     public static function getIp(): string{
         return IpService::getIp();
     }
-    public static function baseRequest(string $routeName,$params=[],$method='POST'): LxBaseResponse{
+    
+    /**
+     * 基础请求
+     * @param string $routeName
+     * @param array $params
+     * @param string $method
+     * @param array $headers
+     * @return LxBaseResponse
+     */
+    public static function baseRequest( string $routeName,
+                                        array $params=[],
+                                        string $method='POST',
+                                        array $headers=[]): LxBaseResponse{
         $request = new LxBaseRequest();
         $request -> setRouteName($routeName)
                  -> setMethod($method)
-                 -> setParams($params);
+                 -> setParams($params)
+                 -> setHeaders($headers);
         return LxBaseResponse::format($request->doRequest());
     }
 
