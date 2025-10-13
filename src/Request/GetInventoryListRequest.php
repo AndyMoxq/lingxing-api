@@ -2,7 +2,7 @@
 namespace ThankSong\LingXing\Request;
 use ThankSOng\LingXing\Exception\RequestException;
 
-class GetInventoryListRequest extends LxBaseRequest{
+class GetInventoryListRequest extends LxBasicRequest{
     public const ROUTE_NAME = '/erp/sc/routing/data/local_inventory/inventoryDetails';
     public const DEFAULT_LENGTH = 20;
     public const MAX_LENGTH = 800;

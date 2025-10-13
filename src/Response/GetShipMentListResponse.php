@@ -2,7 +2,7 @@
 
 namespace ThankSong\LingXing\Response;
 
-class GetShipMentListResponse extends LxBaseResponse {
+class GetShipMentListResponse extends LxBasicResponse {
     public function getTotal():int {
       return $this -> getBody()['data']['total'] ?? 0;
     }

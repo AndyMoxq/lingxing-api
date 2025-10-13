@@ -2,7 +2,7 @@
 
 namespace ThankSong\LingXing\Request;
 
-class GetInboundListRequest extends LxBaseRequest {
+class GetInboundListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/erp/sc/routing/owms/inbound/listInbound';
 
     public function __construct(array $params = []){

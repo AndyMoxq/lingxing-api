@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 use ThankSong\LingXing\Exception\RequestException;
-class GetWarehouseRequest extends LxBaseRequest {
+class GetWarehouseRequest extends LxBasicRequest {
     public const ROUTENAME='/erp/sc/data/local_inventory/warehouse';
 
     public const TYPE_LOCAL = 1;

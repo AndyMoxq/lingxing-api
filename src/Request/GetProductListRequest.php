@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
-class GetProductListRequest extends LxBaseRequest {
+class GetProductListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/erp/sc/routing/data/local_inventory/productList';
 
     public function __construct(){

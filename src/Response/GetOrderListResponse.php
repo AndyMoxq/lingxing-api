@@ -2,7 +2,7 @@
 namespace ThankSong\LingXing\Response;
 use ThankSong\LingXing\Exception\InvalidResponseException;
 
-class GetOrderListResponse extends LxBaseResponse {
+class GetOrderListResponse extends LxBasicResponse {
     public function getData(): array{
         return $this -> getBody()['data']['list'] ?? [];
     }

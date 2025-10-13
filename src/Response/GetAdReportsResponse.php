@@ -2,7 +2,7 @@
 
 namespace ThankSong\LingXing\Response;
 use ThankSong\LingXing\Exception\InvalidResponseException;
-class GetAdReportsResponse extends LxBaseResponse
+class GetAdReportsResponse extends LxBasicResponse
 {
     public function validate(){
         if($this -> getCode() !== 0){

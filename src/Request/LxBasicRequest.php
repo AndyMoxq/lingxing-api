@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
-class LxBaseRequest extends Request {
+class LxBasicRequest extends Request {
     public function validate(){
         
     }

@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
-class GetOrderListRequest extends LxBaseRequest {
+class GetOrderListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/pb/mp/order/v2/list';
     public const MAX_LENGTH=500;
     public const DEFAULT_LENGTH=20;

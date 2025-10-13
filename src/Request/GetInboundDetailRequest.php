@@ -2,7 +2,7 @@
 
 namespace ThankSong\LingXing\Request;
 
-class GetInboundDetailRequest extends LxBaseRequest
+class GetInboundDetailRequest extends LxBasicRequest
 {
     public const ROUTE_NAME = '/basicOpen/overSeaWarehouse/stockOrder/detail';
     public function __construct(string $overseas_order_no = null){

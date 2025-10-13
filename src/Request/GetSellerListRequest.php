@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
-class GetSellerListRequest extends LxBaseRequest {
+class GetSellerListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/pb/mp/shop/v2/getSellerList';
     public const DEFAULT_LENGTH = 200;
 

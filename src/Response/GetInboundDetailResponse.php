@@ -3,7 +3,7 @@
 namespace ThankSong\LingXing\Response;
 use ThankSong\LingXing\Exception\InvalidResponseException;
 
-class GetInboundDetailResponse extends LxBaseResponse
+class GetInboundDetailResponse extends LxBasicResponse
 {
     public function valdidate(){
         if($this -> getCode() !== 0){

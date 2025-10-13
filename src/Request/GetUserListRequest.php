@@ -1,9 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Request;
 
-use ThankSong\LingXing\Request\LxBaseRequest;
-
-class GetUserListRequest extends LxBaseRequest
+class GetUserListRequest extends LxBasicRequest
 {
     public const ROUTE_NAME = '/erp/sc/data/account/lists';
     public const METHOD = 'GET';

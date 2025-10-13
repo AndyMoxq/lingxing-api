@@ -1,8 +1,8 @@
 <?php
 namespace ThankSong\LingXing;
 use ThankSong\LingXing\Services\IpService;
-use ThankSong\LingXing\Request\LxBaseRequest;
-use ThankSong\LingXing\Response\LxBaseResponse;
+use ThankSong\LingXing\Request\LxBasicRequest;
+use ThankSong\LingXing\Response\LxBasicResponse;
 use ThankSong\LingXing\Request\GetWarehouseRequest;
 use ThankSong\LingXing\Response\GetWarehouseResponse;
 use ThankSong\LingXing\Request\GetSellerListRequest;
@@ -51,18 +51,18 @@ class LingXing
      * @param array $params
      * @param string $method
      * @param array $headers
-     * @return LxBaseResponse
+     * @return LxBasicResponse
      */
-    public static function baseRequest( string $routeName,
+    public static function basicRequest( string $routeName,
                                         array $params=[],
                                         string $method='POST',
-                                        array $headers=[]): LxBaseResponse{
-        $request = new LxBaseRequest();
+                                        array $headers=[]): LxBasicResponse{
+        $request = new LxBasicRequest();
         $request -> setRouteName($routeName)
                  -> setMethod($method)
                  -> setParams($params)
                  -> setHeaders($headers);
-        return LxBaseResponse::format($request->doRequest());
+        return LxBasicResponse::format($request->doRequest());
     }
 
     /**
@@ -188,10 +188,10 @@ class LingXing
      * 获取供应商列表
      * @param int $offset
      * @param int $length
-     * @return LxBaseResponse
+     * @return LxBasicResponse
      */
-    public static function getSupplierList(int $offset=0,int $length=1000): LxBaseResponse{
-        return self::baseRequest('/erp/sc/data/local_inventory/supplier',
+    public static function getSupplierList(int $offset=0,int $length=1000): LxBasicResponse{
+        return self::basicRequest('/erp/sc/data/local_inventory/supplier',
                                     ['offset'=>$offset,'length'=>$length]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ThankSong\LingXing\Request;
 
-class GetSpAdReportsRequest extends LxBaseRequest
+class GetSpAdReportsRequest extends LxBasicRequest
 {
     public const ROUTE_NAME = '/pb/openapi/newad/spCampaignReports';
     public function __construct(){

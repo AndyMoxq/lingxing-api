@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Response;
 
-class GetInboundListResponse extends LxBaseResponse {
+class GetInboundListResponse extends LxBasicResponse {
     public function validate(){
 
     }

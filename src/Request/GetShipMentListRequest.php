@@ -4,7 +4,7 @@ namespace ThankSong\LingXing\Request;
 use Illuminate\Support\Carbon;
 use ThankSong\LingXing\Exception\RequestException;
 
-class GetShipMentListRequest extends LxBaseRequest {
+class GetShipMentListRequest extends LxBasicRequest {
     public const ROUTE_NAME = '/erp/sc/routing/storage/shipment/getInboundShipmentList';
     public const DEFAULT_LENGTH = 20;
     public const DEFAULT_OFFSET = 0;

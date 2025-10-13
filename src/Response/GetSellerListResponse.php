@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Response;
 
-class GetSellerListResponse extends LxBaseResponse {
+class GetSellerListResponse extends LxBasicResponse {
     public function hasMore($length = 200): bool{
         return count($this -> getData()) == $length;
     }

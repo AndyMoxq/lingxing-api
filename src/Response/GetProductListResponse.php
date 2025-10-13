@@ -1,7 +1,7 @@
 <?php
 namespace ThankSong\LingXing\Response;
 
-class GetProductListResponse extends LxBaseResponse {
+class GetProductListResponse extends LxBasicResponse {
     public function getTotal():int{
         return $this -> getBody()['total'] ?? 0;
     }
