@@ -23,6 +23,8 @@ use ThankSong\LingXing\Request\GetShipMentListRequest;
 use ThankSong\LingXing\Response\GetShipMentListResponse;
 use ThankSong\LingXing\Request\GetUserListRequest;
 use ThankSong\LingXing\Response\GetUserListResponse;
+use ThankSong\LingXing\Request\GetInventoryListRequest;
+use ThankSong\LingXing\Response\GetInventoryListResponse;
 
 class LingXing
 {
@@ -61,6 +63,17 @@ class LingXing
                  -> setParams($params)
                  -> setHeaders($headers);
         return LxBaseResponse::format($request->doRequest());
+    }
+
+    /**
+     * 获取库存明细
+     * @param array $params
+     * @return GetInventoryListResponse
+     */
+    public static function getInventoryList(array $params=[]): GetInventoryListResponse{
+        $request = new GetInventoryListRequest();
+        $request -> setParams($params);
+        return GetInventoryListResponse::format($request -> doRequest());
     }
 
     /**
@@ -171,7 +184,14 @@ class LingXing
         return GetInboundListResponse::format($request -> doRequest());
     }
 
-
-
-
+    /**
+     * 获取供应商列表
+     * @param int $offset
+     * @param int $length
+     * @return LxBaseResponse
+     */
+    public static function getSupplierList(int $offset=0,int $length=1000): LxBaseResponse{
+        return self::baseRequest('/erp/sc/data/local_inventory/supplier',
+                                    ['offset'=>$offset,'length'=>$length]);
+    }
 }
