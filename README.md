@@ -43,10 +43,10 @@ use ThankSong\LingXing\Request\GetOrderListRequest;
 
 $request = new GetOrderListRequest();
 $request -> setOffset(0)
-          -> setLength(20)
-          -> setDateType('update_time')
-          -> setStartTime(now()->subHours(2)->timestamp)
-          -> setEndTime(now()->endOfDay()->timestamp);
+         -> setLength(20)
+         -> setDateType('update_time')
+         -> setStartTime(now()->subHours(2)->timestamp)
+         -> setEndTime(now()->endOfDay()->timestamp);
 $response = $request -> send();
 
 dump($response -> getData());
