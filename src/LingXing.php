@@ -96,7 +96,7 @@ class LingXing
     }
 
     /**
-     * 获取店铺列表
+     * 获取多平台店铺列表
      * @param array $params
      * @return GetSellerListResponse
      */
