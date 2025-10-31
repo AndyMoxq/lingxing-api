@@ -1,5 +1,7 @@
 <?php
 namespace ThankSong\LingXing;
+use ThankSong\LingXing\Request\GetFbaOrderListRequest;
+use ThankSong\LingXing\Response\GetFbaOrderListResponse;
 use ThankSong\LingXing\Services\IpService;
 use ThankSong\LingXing\Request\LxBasicRequest;
 use ThankSong\LingXing\Response\LxBasicResponse;
@@ -193,5 +195,15 @@ class LingXing
     public static function getSupplierList(int $offset=0,int $length=1000): LxBasicResponse{
         return self::basicRequest('/erp/sc/data/local_inventory/supplier',
                                     ['offset'=>$offset,'length'=>$length]);
+    }
+
+    public static function getFbaOrderList(array $params): GetFbaOrderListResponse{
+        $request = new GetFbaOrderListRequest($params);
+        return $request -> send();
+    }
+
+    public static function getOrderDetail(string $order_id): LxBasicResponse{
+        return self::basicRequest('/erp/sc/data/mws/orderDetail',
+                                    ['order_id'=>$order_id]);
     }
 }

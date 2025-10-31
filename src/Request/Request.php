@@ -66,6 +66,23 @@ abstract class Request {
     }
 
     /**
+     * 获取单个参数
+     * @param $key
+     * @return mixed|null
+     */
+    public function getParam($key){
+        return $this -> params[$key]?? null;
+    }
+
+    /**
+     * 获取所有参数
+     * @return array
+     */
+    public function getParams(): array{
+        return $this -> params;
+    }
+
+    /**
      * 设置请求路径
      * @param string $routeName
      * @return Request
@@ -148,7 +165,6 @@ abstract class Request {
         }
         $this -> validate();
         /* dump([
-            'request_id' => $this -> getRequestId(),
             'app_id' => $appId,
             'routeName' => $this -> routeName,
             'method' => $this -> method,
