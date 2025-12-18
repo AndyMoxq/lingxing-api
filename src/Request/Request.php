@@ -274,7 +274,6 @@ abstract class Request {
     {
         $cacheKey = $this->getCacheKey();
         for ($i = 1; $i <= $times; $i++) {
-            dump("我重试了{$i}次");
             Cache::forget($cacheKey);
             $client->setAccessToken($this->getAccessToken($client));
             $res = $client->makeRequest(
