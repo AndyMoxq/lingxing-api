@@ -1,37 +1,78 @@
 <?php
 namespace ThankSong\LingXing\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
+use InvalidArgumentException;
 use ThankSong\LingXing\Services\OpenAPIRequestService;
 
 abstract class Request {
-    protected $request_id;
-    protected $appId;
-    protected $appSecret;
-    protected $host;
-    protected $params = [];
-    protected $headers = [];
-    protected $client;
-    protected $method = 'POST';
-    protected $routeName;
-    protected $accessToken;
+    protected string $request_id = '';
+    protected ?string $appId = null;
+    protected ?string $appSecret = null;
+    protected ?string $host = null;
+    protected array $params = [];
+    protected array $headers = [];
+    protected OpenAPIRequestService $client;
+    protected string $method = 'POST';
+    protected ?string $routeName = null;
 
-    public function getRequestId(){
-        return $this -> request_id;
+    /**
+     * 获取请求ID
+     * @return string
+     */
+    public function getRequestId(): string {
+        return $this -> request_id ?? '';
     }
 
-    public function setRequestId(string $requestId){
+    /**
+     * 设置请求ID
+     * @param string $requestId
+     * @return Request
+     */
+    public function setRequestId(string $requestId): static {
         $this -> request_id = $requestId;
         return $this;
     }
 
-    public function setAppId(string $appId){
+    /**
+     * 设置appId
+     * @param string $appId
+     * @return static
+     */
+    public function setAppId(string $appId): static {
         $this -> appId = $appId;
         return $this;
     }
 
-    public function setAppSecret(string $appSecret){
+    /**
+     * 获取appId
+     * @return string
+     */
+    protected function getAppId(): string {
+        if(empty($this -> appId)){
+            $this-> setAppId(config('lingxing.appId'));
+        }
+        return $this -> appId;
+    }
+
+    /**
+     * 设置appSecret
+     * @param string $appSecret
+     * @return static
+     */
+    public function setAppSecret(string $appSecret): static {
         $this -> appSecret = $appSecret;
+        return $this;
+    }
+
+    /**
+     * 获取appSecret
+     * @return string
+     */
+    protected function getAppSecret(): string {
+        if(empty($this -> appSecret)){
+            $this-> setAppSecret(config('lingxing.appSecret'));
+        }
+        return $this -> appSecret;
     }
 
     /**
@@ -39,9 +80,20 @@ abstract class Request {
      * @param string $host
      * @return Request
      */
-    public function setHost(string $host){
+    public function setHost(string $host): static {
         $this -> host = $host;
         return $this;
+    }
+
+    /**
+     * 获取请求域名
+     * @return string
+     */
+    public function getHost(): string {
+        if(empty($this -> host)){
+            $this-> setHost(config('lingxing.host','https://openapi.lingxing.com'));
+        }
+        return $this -> host;
     }
 
     /**
@@ -135,7 +187,7 @@ abstract class Request {
     /**
      * 验证必填字段
      * @param array $keys
-     * @throws \Exception
+     * @throws InvalidArgumentException
      * @return void
      */
     public function validateRequiredParams(array $keys){
@@ -145,33 +197,101 @@ abstract class Request {
                 $errors[] = "Param {$key} is required";
             }
         }
-        if(count($errors) > 0){
-            throw new \Exception(implode("\n",$errors));
+        if( \count($errors ) > 0){
+            throw new InvalidArgumentException(implode("\n",$errors));
         }
     }
 
-    public function doRequest(){
-        $this -> setRequestId(Str::uuid());
-        $host = $this -> host ?: config('lingxing.host');
-        $appId= $this -> appId ?: config('lingxing.appId');
-        $appSecret = $this -> appSecret ?: config('lingxing.appSecret');
-        $client = new OpenAPIRequestService($host,$appId,$appSecret);
-        if(!Cache::get("{$appId}_access_token")){
-            $dto = $client -> generateAccessToken();
-            Cache::put("{$appId}_access_token",$dto -> getAccessToken(),$dto -> getExpireAt() - time());
-            $client -> setAccessToken($dto -> getAccessToken());
-        }else{
-            $client -> setAccessToken( Cache::get("{$appId}_access_token"));
+    /**
+     * 获取缓存key
+     * @return string
+     */
+    private function getCacheKey(): string {
+        return $this->getAppId() . "_access_token";
+    }
+
+    /**
+     * 获取access_token
+     * @param OpenAPIRequestService $client
+     * @return string
+     */
+    protected function getAccessToken(OpenAPIRequestService $client): string {
+        $cacheKey = $this->getCacheKey();
+        $lockKey  = "lock:{$cacheKey}";
+        $token = Cache::get($cacheKey);
+        if (!$token) {
+            $token = Cache::lock($lockKey, 10)->block(5, function () use ($client, $cacheKey) {
+                if ($t = Cache::get($cacheKey)) return $t;
+                $dto = $client->generateAccessToken();
+                $ttl = max(60, $dto->getExpireAt() - time() - 120);
+                Cache::put($cacheKey, $dto->getAccessToken(), $ttl);
+                return $dto->getAccessToken();
+            });
         }
-        $this -> validate();
-        /* dump([
-            'app_id' => $appId,
-            'routeName' => $this -> routeName,
-            'method' => $this -> method,
-            'params' => $this -> params,
-            'headers' => $this -> headers,
-        ]); */
-        return $client -> makeRequest($this -> routeName,$this->method,$this->params,$this -> headers);
+        return (string) $token;
+    }
+
+    /**
+     * 执行请求
+     * @return array
+     * @throws \Exception
+     */
+    public function doRequest(): array
+    {
+        $this->validate();
+        if (empty($this->routeName)) {
+            throw new \RuntimeException('routeName is required');
+        }
+        $client = new OpenAPIRequestService(
+            $this->getHost(),
+            $this->getAppId(),
+            $this->getAppSecret()
+        );
+
+        $client->setAccessToken($this->getAccessToken($client));
+        $res = $client->makeRequest(
+            $this->routeName, 
+            $this->method, 
+            $this->params, 
+            $this->headers
+        );
+
+        $tokenNotMatch = str_contains((string)($res['msg'] ?? ''), 'access token not match');
+
+        if (($res['code'] ?? null) === '2001005' || $tokenNotMatch ) {
+            $res = $this->retry($client, 5);
+        }
+        return $res ?? [];
+    }
+
+    /**
+     * 重试机制
+     * @param OpenAPIRequestService $client
+     * @param int $times 重试次数 default 5
+     * @return array
+     */
+    private function retry(OpenAPIRequestService $client, int $times = 5): array
+    {
+        $cacheKey = $this->getCacheKey();
+        for ($i = 1; $i <= $times; $i++) {
+            dump("我重试了{$i}次");
+            Cache::forget($cacheKey);
+            $client->setAccessToken($this->getAccessToken($client));
+            $res = $client->makeRequest(
+                $this->routeName, 
+                $this->method, 
+                $this->params, 
+                $this->headers
+            );
+            $tokenNotMatch = str_contains((string)($res['msg'] ?? ''), 'access token not match');
+            $isTokenError = (($res['code'] ?? null) === '2001005') || $tokenNotMatch;
+            if (! $isTokenError ) {
+                return $res;
+            }
+            sleep(min(1 << $i, 10));
+        }
+
+        return [];
     }
 
     abstract public function validate();
